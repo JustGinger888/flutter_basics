@@ -9,11 +9,15 @@ class AuthService {
     return user != null ? User(uid: user.uid) : null;
   }
 
+
   // Sign In Anon
   Future signInAnon() async {
     try {
+      //Attempt to sign in Anon and store result in user var
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
+      
+      // Return an instance of User class based on Firebase obj
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -21,10 +25,16 @@ class AuthService {
     }
   }
 
+
   // Sign In with Email & Password
+
+
 
   // Register with Email & Password
 
+
+
   // Sign Out
+
 
 }

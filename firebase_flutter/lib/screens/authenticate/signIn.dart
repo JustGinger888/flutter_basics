@@ -23,10 +23,14 @@ class _SignInState extends State<SignIn> {
         child: RaisedButton(
           child: Text('Sign In Anon'),
           onPressed: () async {
+            // Dynamic cause Result can be multiple types
             dynamic result = await _auth.signInAnon();
+
+            // Check if result returns an error or not
             if (result == null) {
-              print('Erroe Signing In');
+              print('Error Signing In');
             } else {
+              // Display User ID in Console
               print('Signed In');
               print(result.uid);
             }
