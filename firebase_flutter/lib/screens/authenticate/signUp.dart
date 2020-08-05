@@ -2,16 +2,16 @@ import 'package:firebase_flutter/constants/const.dart';
 import 'package:firebase_flutter/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
   //Passing Through Function into Widget
   final Function toggleView;
-  SignIn({this.toggleView});
+  SignUp({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -27,14 +27,14 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.blue[400],
         elevation: 0.0,
-        title: Text('Sign In to App'),
+        title: Text('Sign Up to App'),
         actions: <Widget>[
           FlatButton.icon(
             onPressed: () {
               widget.toggleView();
             },
             icon: Icon(Icons.person),
-            label: Text('Register'),
+            label: Text('Sign In'),
             textColor: Colors.white,
           ),
         ],
@@ -62,6 +62,7 @@ class _SignInState extends State<SignIn> {
                   hintText: 'Password',
                 ),
                 obscureText: true,
+
                 //Check password length
                 validator: (val) =>
                     val.length < 6 ? 'Enter a 6+ char password' : null,
@@ -73,14 +74,14 @@ class _SignInState extends State<SignIn> {
               RaisedButton(
                 color: Colors.blue[400],
                 child: Text(
-                  'Sign In',
+                  'Register',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
                   // Validate form based on Current State
                   if (_formKey.currentState.validate()) {
-                    dynamic result =
-                        await _auth.signInWithEmailAndPassword(email, password);
+                    dynamic result = await _auth.registerWithEmailAndPassword(
+                        email, password);
                     if (result == null) {
                       setState(() => error = 'Error');
                     }
@@ -96,37 +97,6 @@ class _SignInState extends State<SignIn> {
           ),
         ),
       ),
-    );
-  }
-}
-
-// LoginAnon(auth: _auth),
-class LoginAnon extends StatelessWidget {
-  const LoginAnon({
-    Key key,
-    @required AuthService auth,
-  })  : _auth = auth,
-        super(key: key);
-
-  final AuthService _auth;
-
-  @override
-  Widget build(BuildContext context) {
-    return RaisedButton(
-      child: Text('Sign In Anon'),
-      onPressed: () async {
-        // Dynamic cause Result can be multiple types
-        dynamic result = await _auth.signInAnon();
-
-        // Check if result returns an error or not
-        if (result == null) {
-          print('Error Signing In');
-        } else {
-          // Display User ID in Console
-          print('Signed In');
-          print(result.uid);
-        }
-      },
     );
   }
 }
