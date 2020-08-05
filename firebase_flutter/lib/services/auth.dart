@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_flutter/models/user.dart';
+import 'package:firebase_flutter/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -51,6 +52,9 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+
+      // Create a new unique document for user based on their UID
+      await DatabaseService(uid: user.uid).updateUserData('', 'Member', 0);
 
       // Return an instance of User class based on Firebase obj
       return _userFromFirebaseUser(user);
