@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_flutter/models/data.dart';
 import 'package:firebase_flutter/screens/home/dataTile.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ class DataList extends StatefulWidget {
 class _DataListState extends State<DataList> {
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<List<Data>>(context);
+    final data = Provider.of<List<Data>>(context) ?? [];
 
     return ListView.builder(
       itemCount: data.length,

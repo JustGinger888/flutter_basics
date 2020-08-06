@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_flutter/models/data.dart';
+import 'package:firebase_flutter/models/user.dart';
 
 class DatabaseService {
   final String uid;
@@ -26,8 +27,23 @@ class DatabaseService {
     }).toList();
   }
 
+  //UserData From Snapshot
+  UserData _userDataListFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid: uid,
+      name: snapshot.data['name'],
+      position: snapshot.data['position'],
+      number: snapshot.data['number'],
+    );
+  }
+
   // Get data Stream
   Stream<List<Data>> get data {
     return dataCollection.snapshots().map(_dataListFromSnapshot);
+  }
+
+  // Get User Doc Stream
+  Stream<UserData> get userData {
+    return dataCollection.document(uid).snapshots().map(_userDataListFromSnapshot);
   }
 }
