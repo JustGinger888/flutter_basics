@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_flutter/models/data.dart';
 import 'package:firebase_flutter/screens/home/dataList.dart';
+import 'package:firebase_flutter/screens/home/settinsForm.dart';
 import 'package:firebase_flutter/services/auth.dart';
 import 'package:firebase_flutter/services/database.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class Home extends StatelessWidget {
         builder: (context) {
           return Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-            child: Text('Bottom Sheet'),
+            child: SettingsForm(),
           );
         },
       );
